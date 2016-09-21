@@ -4,16 +4,22 @@
   "description": "## General Guidelines This is a Frontend developer competency test designed to gauge skill, attention to detail and affinity for standards based development.",
   "main": "index.js",
   "dependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "flux": "^2.1.1",
     "intl-messageformat": "^1.3.0",
     "javascript-time-ago": "^0.4.3",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-flux": "^1.0.1"
+    "react-flux": "^1.0.1",
+    "webpack": "^2.1.0-beta.22"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "devDependencies": {},
   "keywords": [],
   "author": "",
   "license": "ISC"

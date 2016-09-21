@@ -27,5 +27,6 @@ const ArticleTableHeader = React.createClass({
       </li>
     );
   }
-
 });
+
+module.exports = ArticleTableHeader;

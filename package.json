@@ -1,0 +1,19 @@
+{
+  "name": "Mic_test",
+  "version": "1.0.0",
+  "description": "## General Guidelines This is a Frontend developer competency test designed to gauge skill, attention to detail and affinity for standards based development.",
+  "main": "index.js",
+  "dependencies": {
+    "intl-messageformat": "^1.3.0",
+    "javascript-time-ago": "^0.4.3",
+    "react": "^15.3.2",
+    "react-flux": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

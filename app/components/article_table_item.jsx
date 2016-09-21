@@ -1,6 +1,7 @@
 const React = require('react');
-const TimeAgo = require('javascript-time-ago');
 
+// for handling turning a date into a 'time ago' string
+const TimeAgo = require('javascript-time-ago');
 TimeAgo.locale(require('javascript-time-ago/locales/en'));
 require('javascript-time-ago/intl-messageformat-global');
 require('intl-messageformat/dist/locale-data/en');

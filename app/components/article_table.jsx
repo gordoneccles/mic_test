@@ -1,7 +1,7 @@
 const React = require('react');
 const ArticleTableItem = require('./article_table_item.jsx');
 const ArticleTableHeader = require('./article_table_header.jx');
-const ArticleActions = require('./article_actions.js');
+const ArticleActions = require('../actions/article_actions.js');
 
 const ArticleTable = React.createClass({
   getInitialState() {

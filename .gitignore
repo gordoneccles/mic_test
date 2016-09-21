@@ -1,0 +1,5 @@
+# Dependencies
+node_modules
+
+# Sneaky DS_Stores
+.DS_Store

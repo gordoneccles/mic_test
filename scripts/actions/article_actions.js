@@ -1,6 +1,8 @@
 const Dispatcher = require('../dispatcher.js');
 const ArticleAPI = require('../apis/article_api.js');
 
+const ArticleActions = {};
+
 ArticleActions.fetchBatch = function(idx) {
   ArticleAPI.fetchBatch(idx, ArticleActions.receiveBath);
 };

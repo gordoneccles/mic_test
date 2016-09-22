@@ -15,6 +15,14 @@ const ArticleTable = React.createClass({
     ArticleActions.fetchBatch();
   },
 
+  sortByWords() {
+
+  },
+
+  sortBySubmitted() {
+
+  },
+
   render() {
     let articles = this.state.articles.map( article =>
       <ArticleTableItems article={article} />

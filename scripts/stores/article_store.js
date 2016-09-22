@@ -2,8 +2,8 @@ const Dispatcher = require('../dispatcher.js');
 const Store = require('flux/utils').Store;
 const ArticleStore = new Store(Dispatcher);
 
-_allArticles = [];
-_newArticles = [];
+let _allArticles = [];
+let _newArticles = [];
 
 ArticleStore.receiveBatch = function(articles) {
   _newArticles = articles;
@@ -26,3 +26,5 @@ ArticleStore.__onDispatch = function(payload) {
       break;
   }
 };
+
+module.exports = ArticleStore;

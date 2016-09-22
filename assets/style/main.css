@@ -1,0 +1,35 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+#article-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+}
+
+#article-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: red;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.header-item {
+  border-right: 1px solid black;
+  padding: 20px;
+  width: 25%;
+}
+
+.clickable:hover {
+  cursor: pointer;
+}

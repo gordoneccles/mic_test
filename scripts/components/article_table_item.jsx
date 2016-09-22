@@ -26,10 +26,12 @@ const ArticleTableItem = React.createClass({
         <li>
           <ul className="article-line-item">
             <li className="line-item-summary">
-              <div className="line-item-thumbnail"><img src={this.props.article.image} /></div>
-              <span className="line-item-title">{this.props.article.title}</span>
+              <a href="#">
+                <div className="line-item-thumbnail"><img src={this.props.article.image} /></div>
+                <span className="line-item-title">{this.props.article.title}</span>
+              </a>
             </li>
-            <li className="line-item-author">{this.author || this.setAuthor()}</li>
+            <li className="line-item-author"><a href="#">{this.author || this.setAuthor()}</a></li>
             <li className="line-item-words">{this.props.article.words}</li>
             <li className="line-item-submitted">{this.submittedTimeAgo || this.setSubmittedTimeAgo()}</li>
           </ul>

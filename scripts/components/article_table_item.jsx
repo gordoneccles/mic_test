@@ -7,33 +7,31 @@ require('javascript-time-ago/intl-messageformat-global');
 require('intl-messageformat/dist/locale-data/en');
 
 const ArticleTableItem = React.createClass({
-    componentDidMount() {
-      this.setAuthor();
-      this.setSubmittedTime();
-    },
-
     setAuthor() {
       let firstName = this.props.article.profile.first_name;
       let lastName = this.props.article.profile.last_name;
       this.author = `${firstName} ${lastName}`;
+      return this.author;
     },
 
-    setSubmittedTime() {
+    setSubmittedTimeAgo() {
       const TimeAgoEnglish = new TimeAgo('en-US');
-      this.submittedTime = TimeAgoEnglish.format(this.props.article.publish_at);
+      let publishDate = new Date(this.props.article.publish_at);
+      this.submittedTimeAgo = TimeAgoEnglish.format(publishDate);
+      return this.submittedTimeAgo;
     },
 
     render() {
       return (
-        <li className="article-item">
-          <ul className="article-item-list">
-            <li className="item-title">
-              <img src={this.props.article.image} className="article-item-thumb"/>
-              {this.props.article.title}
+        <li>
+          <ul className="article-line-item">
+            <li className="line-item-summary">
+              <div className="line-item-thumbnail"><img src={this.props.article.image} /></div>
+              <span className="line-item-title">{this.props.article.title}</span>
             </li>
-            <li className="item-author">{this.author}</li>
-            <li className="item-words">{this.props.article.words}</li>
-            <li classname="item-submitted">{this.submittedTime}</li>
+            <li className="line-item-author">{this.author || this.setAuthor()}</li>
+            <li className="line-item-words">{this.props.article.words}</li>
+            <li className="line-item-submitted">{this.submittedTimeAgo || this.setSubmittedTimeAgo()}</li>
           </ul>
         </li>
       );

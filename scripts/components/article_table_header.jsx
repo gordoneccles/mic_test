@@ -18,11 +18,11 @@ const ArticleTableHeader = React.createClass({
 
     return (
       <li>
-        <ul id="article-header">
-          <li className="header-item">{`UNPUBLISHED ARTICLES (${count})`}</li>
-          <li className="header-item">AUTHOR</li>
-          <li className="header-item clickable" onClick={this.sortByWords}>WORDS</li>
-          <li className="header-item clickable" onClick={this.sortBySubmitted}>SUBMITTED</li>
+        <ul id="article-header" className="article-line-item">
+          <li className="line-item-summary header-item">{`UNPUBLISHED ARTICLES (${count})`}</li>
+          <li className="line-item-author header-item">AUTHOR</li>
+          <li className="line-item-words header-item clickable" onClick={this.sortByWords}>WORDS</li>
+          <li className="line-item-submitted header-item clickable" onClick={this.sortBySubmitted}>SUBMITTED</li>
         </ul>
       </li>
     );

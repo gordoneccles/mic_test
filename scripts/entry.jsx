@@ -1,6 +1,6 @@
 const ReactDOM = require('react-dom');
 const React = require('react');
-const ArticleTable = require('./scripts/components/article_table.jsx');
+const ArticleTable = require('./components/article_table.jsx');
 
 document.addEventListener("DOMContentLoaded", () => {
     let root = document.getElementById("root");

@@ -2,7 +2,7 @@ const ArticleAPI = {};
 
 ArticleAPI.fetchBatch = function(idx, successCB) {
   let request = new XMLHttpRequest();
-  request.open('GET', 'some/where', true);
+  request.open('GET', '../../assets/data/articles.json', true);
 
   request.onload = function() {
     let data = JSON.parse(request.responseText);

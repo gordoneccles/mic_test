@@ -23,9 +23,14 @@ const ArticleTable = React.createClass({
 
   },
 
+  refreshArticles() {
+    let articles = this.state.articles.concat(ArticleStore.new());
+    this.setState({ articles: articles });
+  },
+
   render() {
     let articles = this.state.articles.map( article =>
-      <ArticleTableItems article={article} />
+      <ArticleTableItem article={article} key={article.id}/>
     );
 
     return (

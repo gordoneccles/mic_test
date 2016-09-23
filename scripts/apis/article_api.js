@@ -1,12 +1,13 @@
 const ArticleAPI = {};
 
-ArticleAPI.fetchBatch = function(idx, successCB) {
+ArticleAPI.fetchBatch = function(idx, count, successCB) {
   let request = new XMLHttpRequest();
-  request.open('GET', '../../assets/data/articles.json', true);
+  request.open('GET', '../../assets/data/lots-o-articles.json', true);
 
   request.onload = function() {
     let data = JSON.parse(request.responseText);
-    let articles = data.slice(idx, idx + 30);
+    // Pretend server only sent up 'count' articles
+    let articles = data.slice(idx, idx + count);
     successCB(articles);
   };
 

@@ -3,8 +3,8 @@ const ArticleAPI = require('../apis/article_api.js');
 
 const ArticleActions = {};
 
-ArticleActions.fetchBatch = function(idx = 0) {
-  ArticleAPI.fetchBatch(idx, ArticleActions.receiveBatch);
+ArticleActions.fetchBatch = function(idx, count) {
+  ArticleAPI.fetchBatch(idx, count, ArticleActions.receiveBatch);
 };
 
 ArticleActions.receiveBatch = function(articles) {

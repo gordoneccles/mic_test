@@ -1,22 +1,18 @@
 const Dispatcher = require('../dispatcher.js');
 const Store = require('flux/utils').Store;
 const ArticleStore = new Store(Dispatcher);
+const ArticleActions = require('../actions/article_actions');
 
-let _allArticles = [];
-let _newArticles = [];
+let _articles = [];
+let _PULL_COUNT = 30;
 
 ArticleStore.receiveBatch = function(articles) {
-  _newArticles = articles;
-  _allArticles = _allArticles.concat(articles);
+  _articles = _articles.concat(articles);
   ArticleStore.__emitChange();
 };
 
-ArticleStore.all = function() {
-  return _allArticles.slice();
-};
-
-ArticleStore.new = function() {
-  return _newArticles.slice();
+ArticleStore.getArticles = function(idx, num) {
+  return _articles.slice(idx, idx + num);
 };
 
 ArticleStore.__onDispatch = function(payload) {

@@ -12,4 +12,4 @@ To get up and running:
   3. `http-server`
 3. In a browser open 0.0.0.0:8080 (or one of the URLs suggested by http-server)
 
-![screenshot](./assets/images/screenshot.png)
+![screenshot](./app/assets/images/screenshot.png)

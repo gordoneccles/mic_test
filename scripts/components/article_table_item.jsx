@@ -27,9 +27,9 @@ const ArticleTableItem = React.createClass({
           <ul className="article-line-item">
             <li className="line-item-summary">
               <div className="line-item-thumbnail">
-                <a href={this.props.article.url}><img src={this.props.article.image} /></a>
+                <a href={this.props.article.url} target="_blank"><img src={this.props.article.image} /></a>
               </div>
-              <a href={this.props.article.url}><span className="line-item-title">{this.props.article.title}</span></a>
+              <a href={this.props.article.url} target="_blank"><span className="line-item-title">{this.props.article.title}</span></a>
             </li>
             <li className="line-item-author"><a href="#">{this.author || this.setAuthor()}</a></li>
             <li className="line-item-words">{this.props.article.words}</li>

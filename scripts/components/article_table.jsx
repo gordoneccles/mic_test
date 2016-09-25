@@ -6,77 +6,97 @@ const ArticleStore = require('../stores/article_store.js');
 
 const ArticleTable = React.createClass({
   getInitialState() {
-    this.PULL_COUNT = 10;
-    this.INITIAL_PULL_COUNT = 30;
-    this.currentIdx = 0;
-    return( { articles: [], sorting: undefined });
+    this.LOAD_COUNT = 10;
+    this.PULL_COUNT = 30;
+    return( { articles: [] });
   },
 
   componentDidMount() {
-    this.listener = ArticleStore.addListener(this.refreshArticles);
-    ArticleActions.fetchBatch(this.currentIdx, this.INITIAL_PULL_COUNT);
+    ArticleActions.fetchArticles(this.state.articles.length, this.PULL_COUNT, this.showMore);
   },
 
-  refreshArticles() {
-    let articles = ArticleStore.getArticles(this.currentIdx, this.PULL_COUNT);
-    this.currentIdx += 10;
-    articles = this.state.articles.concat(articles);
-    this.setState({ articles: articles });
+  sorting() {
+    return document.cookie.replace(/(?:(?:^|.*;\s*)sorting\s*\=\s*([^;]*).*$)|^.*$/, "$1");
   },
 
-  sortByWords() {
-    let articles = this.state.articles;
-    let sorting = (this.state.sorting === "wordsAsc") ? ("wordsDesc") : ("wordsAsc");
+  sort(articles) {
+    if (this.sorting() === "") {
+      return articles;
+    } else if (this.sorting().includes("words")) {
+      return this.sortByWords(articles);
+    } else {
+      return this.sortBySubmitted(articles);
+    }
+  },
 
+  sortByWords(articles) {
     articles = articles.sort((a, b) => {
-      if (sorting === "wordsAsc") {
+      if (this.sorting() === "wordsAsc") {
         return a.words - b.words;
       } else {
         return b.words - a.words;
       }
     });
 
-    this.setState({ articles: articles, sorting: sorting });
+    return articles;
   },
 
-  sortBySubmitted() {
-    let articles = this.state.articles;
-    let sorting = (this.state.sorting === "submittedDesc") ? ("submittedAsc") : ("submittedDesc");
+  sortBySubmitted(articles) {
     let aSubmitted, bSubmitted;
 
     articles = articles.sort((a, b) => {
       aSubmitted = Date.parse(a.publish_at);
       bSubmitted = Date.parse(b.publish_at);
 
-      if (sorting === "submittedAsc") {
+      if (this.sorting() === "submittedAsc") {
         return aSubmitted - bSubmitted;
       } else {
         return bSubmitted - aSubmitted;
       }
     });
 
-    this.setState({ articles: articles, sorting: sorting });
+    return articles;
   },
 
-  loadMore() {
-    ArticleActions.fetchBatch(this.currentIdx, this.PULL_COUNT);
+  toggleWordSorting() {
+    document.cookie = (this.sorting() === "wordsAsc") ? ("sorting=wordsDesc") : ("sorting=wordsAsc");
+    let articles = this.sort(this.state.articles);
+    this.setState({ articles: articles });
+  },
+
+  toggleSubmittedSorting() {
+    document.cookie = (this.sorting() === "submittedAsc") ? ("sorting=submittedDesc") : ("sorting=submittedAsc");
+    let articles = this.sort(this.state.articles);
+    this.setState({ articles: articles });
+  },
+
+  showMore() {
+    let newArticles = ArticleStore.articlesSlice(this.state.articles.length, this.LOAD_COUNT);
+    newArticles = this.sort(newArticles);
+    let articles = this.state.articles.concat(newArticles);
+    this.setState({ articles: articles });
+
+    if (this.state.articles.length + this.LOAD_COUNT >= ArticleStore.count()) {
+      ArticleActions.fetchArticles(this.state.articles.length + this.LOAD_COUNT, this.PULL_COUNT);
+    }
   },
 
   render() {
-    debugger
     let articles = this.state.articles.map( article =>
       <ArticleTableItem article={article} key={article.id}/>
     );
 
     return (
       <ul id="article-table">
-        <ArticleTableHeader sortByWords={this.sortByWords} sortBySubmitted={this.sortBySubmitted}
+        <ArticleTableHeader
+          sortByWords={this.toggleWordSorting}
+          sortBySubmitted={this.toggleSubmittedSorting}
           articleCount={this.state.articles.length}
         />
 
         { articles }
 
-        <li id="load-more-button" className="article-line-item clickable" onClick={this.loadMore}>load more</li>
+        <li id="show-more-button" className="article-line-item clickable" onClick={this.showMore}>Load More</li>
       </ul>
     );
   }

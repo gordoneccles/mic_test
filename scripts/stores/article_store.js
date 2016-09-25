@@ -4,21 +4,28 @@ const ArticleStore = new Store(Dispatcher);
 const ArticleActions = require('../actions/article_actions');
 
 let _articles = [];
-let _PULL_COUNT = 30;
+let _sorting = "";
 
-ArticleStore.receiveBatch = function(articles) {
+ArticleStore.receiveArticles = function(articles) {
   _articles = _articles.concat(articles);
-  ArticleStore.__emitChange();
 };
 
-ArticleStore.getArticles = function(idx, num) {
-  return _articles.slice(idx, idx + num);
+ArticleStore.articlesSlice = function(startIdx, num) {
+  return _articles.slice(startIdx, startIdx + num);
+};
+
+ArticleStore.allArticles = function() {
+  return _articles.slice();
+};
+
+ArticleStore.count = function() {
+  return _articles.length;
 };
 
 ArticleStore.__onDispatch = function(payload) {
   switch(payload.actionType) {
-    case "RECEIVE_ARTICLES_BATCH":
-      ArticleStore.receiveBatch(payload.articles);
+    case "RECEIVE_ARTICLES":
+      ArticleStore.receiveArticles(payload.articles);
       break;
   }
 };

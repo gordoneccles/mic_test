@@ -1,6 +1,6 @@
 const ArticleAPI = {};
 
-ArticleAPI.fetchBatch = function(idx, count, successCB) {
+ArticleAPI.fetchArticles = function(idx, count, successCB) {
   let request = new XMLHttpRequest();
   request.open('GET', '../../assets/data/lots-o-articles.json', true);
 

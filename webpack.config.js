@@ -2,7 +2,7 @@ let path = require("path");
 
 module.exports = {
    context: __dirname,
-   entry: "./scripts/entry.jsx",
+   entry: "./app/scripts/entry.jsx",
    output: {
      path: path.join(__dirname),
      filename: "bundle.js"

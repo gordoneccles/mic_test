@@ -1,18 +1,27 @@
 const React = require('react');
 const ArticleTableItem = require('./article_table_item.jsx');
 const ArticleTableHeader = require('./article_table_header.jsx');
-const ArticleActions = require('../actions/article_actions.js');
-const ArticleStore = require('../stores/article_store.js');
+const ArticleAPI = require('../apis/article_api.js');
 
 const ArticleTable = React.createClass({
   getInitialState() {
     this.LOAD_COUNT = 10;
     this.PULL_COUNT = 30;
+    this.articles = [];
     return( { articles: [] });
   },
 
   componentDidMount() {
-    ArticleActions.fetchArticles(this.state.articles.length, this.PULL_COUNT, this.showMore);
+    let firstTen = function (articles) {
+      this.receiveArticles(articles);
+      this.showMore();
+    }.bind(this);
+    
+    ArticleAPI.fetchArticles (this.state.articles.length, this.PULL_COUNT, firstTen);
+  },
+
+  receiveArticles(articles) {
+      this.articles = this.articles.concat(articles);
   },
 
   sorting() {
@@ -71,13 +80,13 @@ const ArticleTable = React.createClass({
   },
 
   showMore() {
-    let newArticles = ArticleStore.articlesSlice(this.state.articles.length, this.LOAD_COUNT);
+    let newArticles = this.articles.slice(this.state.articles.length, this.state.articles.length + this.LOAD_COUNT);
     newArticles = this.sort(newArticles);
     let articles = this.state.articles.concat(newArticles);
     this.setState({ articles: articles });
 
-    if (this.state.articles.length + this.LOAD_COUNT >= ArticleStore.count()) {
-      ArticleActions.fetchArticles(this.state.articles.length + this.LOAD_COUNT, this.PULL_COUNT);
+    if (this.state.articles.length + this.LOAD_COUNT >= this.articles.length) {
+      ArticleAPI.fetchArticles (this.state.articles.length + this.LOAD_COUNT, this.PULL_COUNT, this.receiveArticles);
     }
   },
 

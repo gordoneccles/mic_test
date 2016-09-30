@@ -25,15 +25,15 @@ const ArticleTableItem = React.createClass({
       return (
         <li>
           <ul className="article-line-item">
-            <li className="line-item-summary">
+            <li className="line-item-summary body-item">
               <div className="line-item-thumbnail">
                 <a href={this.props.article.url} target="_blank"><img src={this.props.article.image} /></a>
               </div>
               <a href={this.props.article.url} target="_blank"><span className="line-item-title">{this.props.article.title}</span></a>
             </li>
-            <li className="line-item-author"><a href="#">{this.author || this.setAuthor()}</a></li>
-            <li className="line-item-words">{this.props.article.words}</li>
-            <li className="line-item-submitted">{this.submittedTimeAgo || this.setSubmittedTimeAgo()}</li>
+            <li className="line-item-author body-item"><a href="#">{this.author || this.setAuthor()}</a></li>
+            <li className="line-item-words body-item">{this.props.article.words}</li>
+            <li className="line-item-submitted body-item">{this.submittedTimeAgo || this.setSubmittedTimeAgo()}</li>
           </ul>
         </li>
       );

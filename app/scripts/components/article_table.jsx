@@ -12,12 +12,14 @@ const ArticleTable = React.createClass({
   },
 
   componentDidMount() {
-    let firstTen = function (articles) {
-      this.receiveArticles(articles);
-      this.showMore();
-    }.bind(this);
-
-    ArticleAPI.fetchArticles (this.displayedCount(), this.PULL_COUNT, firstTen);
+    let that = this;
+    ArticleAPI.fetchArticles(this.displayedCount(), this.PULL_COUNT)
+                .then(function(articles) {
+                    that.receiveArticles(articles);
+                    that.showMore();
+                }, function(error) {
+                    console.error("Well, I tried", error);
+                });
   },
 
   receiveArticles(articles) {
@@ -92,8 +94,15 @@ const ArticleTable = React.createClass({
     this.setState({ articles: articles });
 
     if (this.displayedCount() + this.LOAD_COUNT >= this.articles.length) {
-      ArticleAPI.fetchArticles (this.displayedCount() + this.LOAD_COUNT, this.PULL_COUNT, this.receiveArticles);
+      let that = this;
+      ArticleAPI.fetchArticles(this.displayedCount() + this.LOAD_COUNT, this.PULL_COUNT)
+                  .then(function(articles) {
+                      that.receiveArticles(articles);
+                  }, function(error) {
+                      console.error("Well, I tried", error);
+                  });
     }
+
   },
 
   render() {

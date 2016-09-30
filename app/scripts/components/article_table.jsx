@@ -16,8 +16,8 @@ const ArticleTable = React.createClass({
       this.receiveArticles(articles);
       this.showMore();
     }.bind(this);
-    
-    ArticleAPI.fetchArticles (this.state.articles.length, this.PULL_COUNT, firstTen);
+
+    ArticleAPI.fetchArticles (this.displayedCount(), this.PULL_COUNT, firstTen);
   },
 
   receiveArticles(articles) {
@@ -25,7 +25,7 @@ const ArticleTable = React.createClass({
   },
 
   sorting() {
-    return document.cookie.replace(/(?:(?:^|.*;\s*)sorting\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    return window.localStorage.getItem("sorting") || "";
   },
 
   sort(articles) {
@@ -67,26 +67,32 @@ const ArticleTable = React.createClass({
     return articles;
   },
 
+  displayedCount() {
+    return this.state.articles.length;
+  },
+
   toggleWordSorting() {
-    document.cookie = (this.sorting() === "wordsAsc") ? ("sorting=wordsDesc") : ("sorting=wordsAsc");
+    let sorting = (this.sorting() === "wordsAsc") ? ("wordsDesc") : ("wordsAsc");
+    window.localStorage.setItem("sorting", sorting);
     let articles = this.sort(this.state.articles);
     this.setState({ articles: articles });
   },
 
   toggleSubmittedSorting() {
-    document.cookie = (this.sorting() === "submittedAsc") ? ("sorting=submittedDesc") : ("sorting=submittedAsc");
+    let sorting = (this.sorting() === "submittedAsc") ? ("submittedDesc") : ("submittedAsc");
+    window.localStorage.setItem("sorting", sorting);
     let articles = this.sort(this.state.articles);
     this.setState({ articles: articles });
   },
 
   showMore() {
-    let newArticles = this.articles.slice(this.state.articles.length, this.state.articles.length + this.LOAD_COUNT);
+    let newArticles = this.articles.slice(this.displayedCount(), this.displayedCount() + this.LOAD_COUNT);
     newArticles = this.sort(newArticles);
     let articles = this.state.articles.concat(newArticles);
     this.setState({ articles: articles });
 
-    if (this.state.articles.length + this.LOAD_COUNT >= this.articles.length) {
-      ArticleAPI.fetchArticles (this.state.articles.length + this.LOAD_COUNT, this.PULL_COUNT, this.receiveArticles);
+    if (this.displayedCount() + this.LOAD_COUNT >= this.articles.length) {
+      ArticleAPI.fetchArticles (this.displayedCount() + this.LOAD_COUNT, this.PULL_COUNT, this.receiveArticles);
     }
   },
 
@@ -100,7 +106,7 @@ const ArticleTable = React.createClass({
         <ArticleTableHeader
           sortByWords={this.toggleWordSorting}
           sortBySubmitted={this.toggleSubmittedSorting}
-          articleCount={this.state.articles.length}
+          articleCount={this.displayedCount()}
         />
 
         { articles }
